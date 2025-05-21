@@ -1,6 +1,5 @@
 import numpy as np
 import cv2
-from glob import glob
 
 def color(t, v_min):
     h,s,v=t[0],t[1],t[2]
@@ -65,8 +64,7 @@ def color_detector(filename):
                 group = dfs(i,j,monit,buf)
                 if len(group)>=len(frame):
                     frame=group
-    # if len(frame)==0: return 'X'
-    
+    '''
     disp=[]
     for i in range(H//5):
         l=[]
@@ -77,13 +75,15 @@ def color_detector(filename):
     disp=disp.astype(np.uint8)
     for i in range(H//5):
         for j in range(W//5):
-            if monit[i][j]==1: disp[i][j]=[255, 255, 255]
+            if monit[i][j]==1: 
+                disp[i][j]=[255, 255, 255]
+                if (i,j) in frame: disp[i][j]=[0,255,255]
             elif monit[i][j]==2: disp[i][j]=[0,0,255]
             elif monit[i][j]==3: disp[i][j]=[0,255,0]
             elif monit[i][j]==4: disp[i][j]=[255,0,0]
     cv2.imshow('image',disp)
     cv2.waitKey(0)
-    
+    '''
 
     x_min = min(p[0] for p in frame)
     x_max = max(p[0] for p in frame)
@@ -112,4 +112,4 @@ def color_detector(filename):
     else: return 'B'
     
 if __name__ == '__main__':
-    print(color_detector('foxchan.PNG'))
+    print(color_detector('input img name here'))
